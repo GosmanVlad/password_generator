@@ -13,3 +13,7 @@ Andrei
 Soare
 Noros
 Catel
+programare
+student
+admis
+python
