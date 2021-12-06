@@ -98,8 +98,8 @@ if __name__ == "__main__":
     numbers_list = string_to_list(numbers)
     symbols_list = string_to_list(symbols)
     entire_list = merge_lists(lower_list, upper_list, numbers_list, symbols_list)
-    entire_list = shuffle(entire_list, random_state=0)
-
+    entire_list = shuffle(entire_list, random_state=random.randint(0, 100))
+    
     if len(sys.argv) > 0:
         if len(sys.argv) > 1:
             if sys.argv[1] == '-use_dict':
