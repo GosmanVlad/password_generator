@@ -77,15 +77,23 @@ def generate_random_password(type, list):
         # incepe cu o majuscula, in caz contrar se verifica urmatorul cuvant
         for word in words_list:
             random_symbols = symbols[random.randint(0, 3)]
-            if word[0].isupper():
-                if len(final_password + word) < random_length:
-                    # Avand in vedere ca in lista de cuvinte nu se regaseste niciun simbol,
-                    # alegem aleator prin aceasta conditie sa introducem un simbol, sau nu
-                    if random.randint(0, 100) % 2 == 0 and index != 0:
-                        final_password += random_symbols
+            isUpper = False
+            if index == 0:
+                isUpper = True
+
+            if len(final_password + word) < random_length:
+                # Avand in vedere ca in lista de cuvinte nu se regaseste niciun simbol,
+                # alegem aleator prin aceasta conditie sa introducem un simbol, sau nu
+                if random.randint(0, 100) % 2 == 0 and index != 0:
+                    final_password += random_symbols
+                else:
+                    if isUpper:
+                        if word[0].isupper():
+                            final_password += word
+                            index += 1
                     else:
                         final_password += word
-                index += 1
+                        index += 1
 
         # Daca combinatia dintre cuvinte formata in for-ul nu respecta lungimea aleasa
         # se completeaza atat cu simboluri cat si cu caractere alfanumerice
