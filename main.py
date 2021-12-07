@@ -1,23 +1,18 @@
 import string
 import random
 import sys
+# from sklearn.utils import shuffle
 from sklearn.utils import shuffle
 
 max_chars = 18
 min_chars = 12
 
-#string:
+# string:
 lower = string.ascii_lowercase
 upper = string.ascii_uppercase
 numbers = string.digits
 symbols = "!?#@"
 
-#lists:
-lower_list = []
-upper_list = []
-numbers_list = []
-symbols_list = []
-words_list = []
 
 # Functie care citeste din fisierul dictionary.txt, linie cu linie
 # si returneaza o lista cu toate cuvintele citite
@@ -27,17 +22,11 @@ def read_words():
         lines = [line.rstrip() for line in lines]
     return lines
 
-# Functie care converteste un sir de caractere intr-o lista
-# Params: string - stringul din care vom obtine lista
-def string_to_list(string):
-    final_list = []
-    for i in range(0, len(string)):
-        final_list.append(string[i])
-    return final_list
 
 # Functie care verifica daca intr-un string sunt simboluri
 # Params: password - string-ul in care vom verifica aparitia simbolurilor
 def check_if_string_contains_symbols(password):
+    symbols_list = list(symbols)
     for symbol in symbols_list:
         if symbol in password:
             return True
@@ -56,13 +45,14 @@ def generate_random_password(type, list):
         first_char = ''.join(random.choices(upper, k=1))
 
         final_password += first_char
-        for i in range(0, random_length-1):
+        for i in range(0, random_length - 1):
             final_password += list[i]
 
         # Daca parola obtinuta nu contine niciun simbol, atunci alegem o pozitie random
         # din parola formata pana acum si inlocuim char-ul ales cu un symbol random
         if not check_if_string_contains_symbols(final_password):
-            final_password = final_password.replace(final_password[random.randint(0, len(final_password)-1)], random_symbols)
+            final_password = final_password.replace(final_password[random.randint(0, len(final_password) - 1)],
+                                                    random_symbols)
 
     if type == "dictionary":
         # Citim din fisier fiecare cuvant, il transformam intr-un string si il amestecam
@@ -108,21 +98,13 @@ def generate_random_password(type, list):
     return final_password
 
 
-def merge_lists(lower, upper, numbers, symbols):
-    return lower + upper + numbers + symbols
-
-
 if __name__ == "__main__":
     final_password = ""
     generate_type = ""
 
     # Convertim toate caracterele intr-o singura lista si le amestecam random
     # pentru a obtine parola finala, respectand conditiile impuse in cerinta
-    lower_list = string_to_list(lower)
-    upper_list = string_to_list(upper)
-    numbers_list = string_to_list(numbers)
-    symbols_list = string_to_list(symbols)
-    entire_list = merge_lists(lower_list, upper_list, numbers_list, symbols_list)
+    entire_list = list(lower + upper + numbers + symbols)
     entire_list = shuffle(entire_list, random_state=random.randint(0, 100))
 
     # In functie de argumentul dat la rulare, algoritmul va genera parola finala
@@ -140,4 +122,5 @@ if __name__ == "__main__":
 
     print("Parola generata: " + final_password)
     print("Marime parola: " + str(len(final_password)))
-    print('Tip generare: generare automata' if generate_type == "auto" else 'Tip generare: generare utilizand dictionarul')
+    print(
+        'Tip generare: generare automata' if generate_type == "auto" else 'Tip generare: generare utilizand dictionarul')
